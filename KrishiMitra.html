@@ -1,0 +1,172 @@
+<!-- index.html: Stylish Agriculture IoT Dashboard with Moisture Gauge -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agriculture IoT Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(to right, #a8edea, #fed6e3);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: #2b5876;
+    }
+    #moisture-text {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .gauge-container {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      margin: 0 auto 30px;
+    }
+    #moistureChart {
+      width: 100%;
+    }
+    .water-drop {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.5em;
+      color: #007BFF;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+    .on-btn {
+      background: #f43505;
+      color: white;
+    }
+    .off-btn {
+      background: #1cd607;
+      color: rgb(249, 239, 239);
+    }
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌿 Smart Agriculture Dashboard</h1>
+    <div id="moisture-text">Soil Moisture: --%</div>
+    <div class="gauge-container">
+      <canvas id="moistureChart"></canvas>
+      <div class="water-drop">💧</div>
+    </div>
+    <div class="btn-group">
+      <button class="on-btn" onclick="controlPump(true)">Turn OFF Pump</button>
+      <button class="off-btn" onclick="controlPump(false)">Turn ON Pump</button>
+    </div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB2-BreO-2a-iMt0eS2tV0g-TlLHPBBSMQ",
+      authDomain: "krishi-ai-4e8c1.firebaseapp.com",
+      databaseURL: "https://krishi-ai-4e8c1-default-rtdb.firebaseio.com",
+      projectId: "krishi-ai-4e8c1",
+      storageBucket: "krishi-ai-4e8c1.firebasestorage.app",
+      messagingSenderId: "405166456294",
+      appId: "1:405166456294:web:68ac980b74ef12ed98aa27",
+      measurementId: "G-CW85NCHZY3"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const ctx = document.getElementById('moistureChart').getContext('2d');
+    let moistureChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Moisture', 'Remaining'],
+        datasets: [{
+          data: [0, 100],
+          backgroundColor: ['#ccc', '#eee'],
+          borderWidth: 0,
+          cutout: '75%',
+          rotation: -90,
+          circumference: 180,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        }
+      }
+    });
+
+    function updateMoistureGauge(value) {
+      const color = value < 30 ? '#ff4d4d' : value < 70 ? '#fdd835' : '#00c853';
+      moistureChart.data.datasets[0].data = [value, 100 - value];
+      moistureChart.data.datasets[0].backgroundColor = [color, '#eee'];
+      moistureChart.update();
+    }
+
+    db.ref("moisture").on("value", snapshot => {
+      const value = snapshot.val();
+      document.getElementById("moisture-text").innerText = `Soil Moisture: ${value}%`;
+      updateMoistureGauge(value);
+    });
+
+    db.ref("alert").on("value", snapshot => {
+      if (snapshot.val() === true) {
+        Swal.fire({
+          title: '⚠️ Soil Alert!',
+          text: 'Soil moisture is too low. Please water the plant.',
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+
+    function controlPump(state) {
+      db.ref("pump").set(state);
+    }
+  </script>
+</body>
+</html>
