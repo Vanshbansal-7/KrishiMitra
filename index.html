@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>KrishiMitra</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -17,15 +18,18 @@
       --color-high: #00c853;
       --nav-height: 60px;
     }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: "Poppins", sans-serif;
     }
+
     html {
       scroll-behavior: smooth;
     }
+
     body {
       background: #121212;
       color: #eee;
@@ -35,6 +39,7 @@
       align-items: center;
       padding-top: var(--nav-height);
     }
+
     nav {
       position: fixed;
       top: 0;
@@ -46,97 +51,107 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 20px;
+      padding: 0 10px;
       z-index: 3000;
       color: #eee;
     }
+
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
+
     .nav-left img {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
     }
+
     .site-name {
       font-weight: 700;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
     }
+
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
+
     .nav-home,
     .nav-farm,
     .nav-about {
       color: #eee;
       text-decoration: none;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 8px;
       transition: background 0.3s ease;
       cursor: pointer;
     }
+
     .nav-home:hover,
     .nav-farm:hover,
     .nav-about:hover {
       background: #333;
     }
+
     main {
       margin-top: var(--nav-height);
       width: 100%;
-      max-width: 600px;
-      padding: 20px;
+      padding: 10px;
       text-align: center;
     }
+
     .main-logo-container {
       margin: 20px auto 10px;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background: #e1e7e433;
-      box-shadow: 0 0 25px 8px #00c853aa;
+      width: 300px;
+      height: 300px;
+      border-radius: 60%;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
     }
+
     .main-logo-container img {
-      width: 300px;
-      height: 300px;
+      width: 100%;
+      height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 0 30px  #c1fb03f9);
+      filter: drop-shadow(0 0 50px #c1fb03f9);
       border-radius: 80%;
       z-index: 2;
     }
+
     .main-site-name {
-      font-size: 5.5rem;
+      font-size: 4rem;
       font-weight: 900;
       color: #00c853;
-      margin-top: 30px;
-      margin-bottom: 40px;
+      margin-top: -20px;
+      margin-bottom: 30px;
     }
+
     .quote-box {
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: #f7f0f0;
-      margin: 30px auto;
-      max-width: 600px;
-      padding: 0 20px;
+      margin: 20px auto;
+      max-width: 90%;
+      padding: 0 10px;
       font-style: italic;
     }
+
     .quote-author {
       text-align: right;
-      font-size: 1rem;
-      margin-top: 10px;
+      font-size: 0.9rem;
+      margin-top: 5px;
       font-style: normal;
       color: #ccc;
     }
+
     #farmBtn {
-      padding: 14px 40px;
-      font-size: 1.2rem;
+      padding: 10px 30px;
+      font-size: 1rem;
       font-weight: 600;
       background: #00c853;
       border: none;
@@ -144,27 +159,32 @@
       color: white;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
+
     #farmBtn:hover {
       background: #008c2a;
     }
+
     #about {
-      padding: 60px 20px;
+      padding: 40px 20px;
       text-align: center;
-      max-width: 800px;
+      max-width: 90%;
       margin: 50px auto 0;
     }
+
     #about h2 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: #00c853;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
+
     #about p {
-      font-size: 1.1rem;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.5;
       color: #eee;
     }
+
     #dashboardOverlay {
       position: fixed;
       top: var(--nav-height);
@@ -177,63 +197,74 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 40px 20px;
+      padding: 20px;
       overflow-y: auto;
     }
+
     #dashboardOverlay.active {
       display: flex;
     }
+
     #moisture-text {
-      font-size: 1.5em;
-      margin-bottom: 20px;
+      font-size: 1.2em;
+      margin-bottom: 15px;
       font-weight: 500;
       color: #eee;
     }
+
     .gauge-container {
       position: relative;
       width: 100%;
-      max-width: 350px;
-      margin: 0 auto 30px;
+      max-width: 300px;
+      margin: 0 auto 20px;
     }
+
     #moistureChart {
       width: 100%;
     }
+
     .water-drop {
       position: absolute;
-      top: 65%;
+      top: 60%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 3.5em;
+      font-size: 3em;
       color: #007bfff3;
     }
+
     .btn-group {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       margin-top: 10px;
       flex-wrap: wrap;
     }
+
     button.control-btn {
-      padding: 12px 30px;
-      font-size: 1em;
+      padding: 10px 20px;
+      font-size: 0.9em;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      min-width: 120px;
+      min-width: 100px;
     }
+
     .on-btn {
       background: hsl(126, 92%, 56%);
       color: #fff;
     }
+
     .off-btn {
       background: hsl(3, 95%, 47%);
       color: #fff;
     }
+
     #pumpLabel {
-      margin-top: 40px;
+      margin-top: 20px;
       font-weight: 600;
       color: #ccc;
     }
+
     #blinkOverlay {
       position: fixed;
       top: 50%;
@@ -242,35 +273,49 @@
       z-index: 3000;
       display: none;
     }
+
     #blinkOverlay img {
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
       animation: blink 1s infinite;
       border-radius: 50%;
       filter: drop-shadow(0 0 10px #00c853cc);
     }
+
     @keyframes blink {
-      0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0; }
+
+      0%,
+      50%,
+      100% {
+        opacity: 1;
+      }
+
+      25%,
+      75% {
+        opacity: 0;
+      }
     }
+
     #backBtn {
       position: absolute;
       top: 20px;
       left: 20px;
       background: #333;
       color: white;
-      padding: 10px 20px;
+      padding: 8px 15px;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 0.9rem;
       cursor: pointer;
       z-index: 2100;
     }
+
     #backBtn:hover {
       background: #555;
     }
   </style>
 </head>
+
 <body>
   <nav>
     <div class="nav-left">
@@ -316,11 +361,11 @@
   <section id="about">
     <h2>About Us</h2>
     <p>
-      KrishiMitra is a smart farming assistant designed to simplify irrigation management through real-time soil moisture monitoring and pump control. Our goal is to conserve water and empower farmers with technology. Built with Firebase and IoT, KrishiMitra bridges the gap between agriculture and innovation.
+      KrishiMitra is a smart farming assistant designed to simplify irrigation management through real-time soil
+      moisture monitoring and pump control. Our goal is to conserve water and empower farmers with technology. Built
+      with Firebase and IoT, KrishiMitra bridges the gap between agriculture and innovation.
     </p>
   </section>
-
-  
 
   <script>
     const firebaseConfig = {
@@ -375,25 +420,25 @@
       e.preventDefault();
       dashboardOverlay.classList.remove("active");
       window.scrollTo({
-      top: 250,
-      behavior: "smooth"
-  });
+        top: 250,
+        behavior: "smooth"
+      });
     });
     document.querySelector(".nav-home").addEventListener("click", (e) => {
       e.preventDefault();
       dashboardOverlay.classList.remove("active");
       window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-  });
+        top: 0,
+        behavior: "smooth"
+      });
     });
     document.querySelector(".nav-about").addEventListener("click", (e) => {
       e.preventDefault();
       dashboardOverlay.classList.remove("active");
       window.scrollTo({
-      top : 5000,
-      behavior: "smooth"
-  });
+        top: 5000,
+        behavior: "smooth"
+      });
     });
 
     db.ref("moisture").on("value", (snapshot) => {
@@ -403,7 +448,7 @@
         moistureChart.data.datasets[0].data = [value, 100 - value];
         moistureChart.data.datasets[0].backgroundColor = value < 30 ? ["#ff4d4d", "#444"]
           : value < 60 ? ["#fdd835", "#444"]
-          : ["#00c853", "#444"];
+            : ["#00c853", "#444"];
         moistureChart.update();
       }
     });
@@ -424,7 +469,13 @@
           title: '⚠️ Soil Alert!',
           text: 'Soil moisture is too low. Please water the plant.',
           icon: 'warning',
-          confirmButtonText: 'OK'
+          showCancelButton: true,
+          confirmButtonText: 'OK',
+          cancelButtonText: 'FARM'
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.cancel) {
+            dashboardOverlay.classList.add("active");
+          }
         });
       }
     });
@@ -438,4 +489,5 @@
     offBtn.addEventListener("click", () => togglePump(false));
   </script>
 </body>
+
 </html>
