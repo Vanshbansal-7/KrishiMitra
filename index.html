@@ -77,13 +77,13 @@
       align-items: center;
       gap: 8px;
     }
-
+    .nav-contact,
     .nav-home,
     .nav-farm,
     .nav-about {
       color: #eee;
       text-decoration: none;
-      font-size: 0.7rem;
+      font-size: 1.0rem;
       font-weight: 500;
       padding: 5px 6px;
       border-radius: 8px;
@@ -115,6 +115,7 @@
       align-items: center;
       position: relative;
     }
+
 
     .main-logo-container img {
       width: 100%;
@@ -212,6 +213,9 @@
       font-weight: 500;
       color: #eee;
     }
+
+
+
 
     .gauge-container {
       position: relative;
@@ -323,21 +327,61 @@
       color: #ccc;
       z-index: 1000;
     }
+    /* Responsive Nav Enhancements */
+.nav-toggle {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #eee;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-right {
+    position: absolute;
+    top: var(--nav-height);
+    right: 0;
+    background: #222;
+    flex-direction: column;
+    width: 100%;
+    display: none;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .nav-right.show {
+    display: flex;
+  }
+
+  .nav-right a {
+    padding: 10px 0;
+    font-size: 1rem;
+    border-top: 1px solid #444;
+  }
+}
+
   </style>
 </head>
 
 <body>
-  <nav>
-    <div class="nav-left">
-      <img src="favicon.png" alt="Logo" />
-      <div class="site-name">KrishiMitra</div>
-    </div>
-    <div class="nav-right">
-      <a href="#" class="nav-home">🏠 Home</a>
-      <a href="#farmBtn" class="nav-farm">🌾 Farm</a>
-      <a href="#about" class="nav-about">ℹ️ About Us</a>
-    </div>
-  </nav>
+<nav>
+  <div class="nav-left">
+    <img src="favicon.png" alt="Logo" />
+    <div class="site-name">KrishiMitra</div>
+  </div>
+  <div class="nav-toggle" id="navToggle">&#9776;</div>
+  <div class="nav-right" id="navMenu">
+    <a href="#" class="nav-home">🏠 Home</a>
+    <a href="#farmBtn" class="nav-farm">🌾 Farm</a>
+    <a href="#about" class="nav-about">ℹ️ About Us</a>
+    <a href="#contact" class="nav-contact">📬 Contact Us</a>
+
+  </div>
+</nav>
+
   <main>
 
     <div id="dateTime" style="font-size: 1rem; margin-bottom: 20px; color: #ccc;"></div>
@@ -381,6 +425,19 @@
       with Firebase and IoT, KrishiMitra bridges the gap between agriculture and innovation.
     </p>
   </section>
+  <section id="contact" style="padding: 40px 20px; text-align: center; max-width: 90%; margin: 50px auto 0;">
+  <h2 style="font-size: 2rem; color: #00c853; margin-bottom: 15px;">Contact Us</h2>
+  <p style="font-size: 1rem; color: #eee; margin-bottom: 10px;">
+    📧 Email: <a href="mailto:vanshbansal0210@gmail.com" style="color: #4fc3f7;">vanshbansal0210@gmail.com</a>
+  </p>
+  <p style="font-size: 1rem; color: #eee;">
+    🔗 LinkedIn: <a href="https://www.linkedin.com/in/vansh-bansal0210" target="_blank" style="color: #4fc3f7;">www.linkedin.com/in/vansh-bansal0210</a>
+  </p>
+  <div style="margin-top: 20px;">
+    <img src="favicon.png" alt="Site Logo" style="width: 100px; height: 100px; border-radius: 50%; filter: drop-shadow(0 0 10px #00c853cc);" />
+  </div>
+</section>
+
 
   <script>
     const firebaseConfig = {
@@ -419,6 +476,16 @@
         }
       },
     });
+    document.getElementById("navToggle").addEventListener("click", () => {
+  document.getElementById("navMenu").classList.toggle("show");
+});
+document.querySelectorAll(".nav-right a").forEach(link => {
+  link.addEventListener("click", () => {
+    document.getElementById("navMenu").classList.remove("show");
+  });
+});
+
+
 
     const dashboardOverlay = document.getElementById("dashboardOverlay");
     const farmBtn = document.getElementById("farmBtn");
